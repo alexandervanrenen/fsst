@@ -113,10 +113,11 @@ void
 fsst_destroy(fsst_encoder_t*);
 
 /* Return a decoder structure from serialized format (typically used in a block-, file- or row-group header). */
-unsigned int                /* OUT: number of bytes consumed in buf (0 on failure). */
+unsigned int                 /* OUT: number of bytes consumed in buf (0 on failure). */
 fsst_import(
-   fsst_decoder_t *decoder, /* IN: this symbol table will be overwritten. */ 
-   const unsigned char *buf /* IN: pointer to a byte-buffer where fsst_export() serialized this symbol table. */
+   fsst_decoder_t *decoder,  /* IN: this symbol table will be overwritten. */ 
+   const unsigned char *buf, /* IN: pointer to a byte-buffer where fsst_export() serialized this symbol table. */
+   size_t *table_size = NULL /* OUT: set to the number of valid entries in the symbol table. (optional) */
 ); 
 
 /* Return a decoder structure from an encoder. */

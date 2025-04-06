@@ -552,7 +552,7 @@ extern "C" u32 fsst_export(fsst_encoder_t *encoder, u8 *buf) {
 
 #define FSST_CORRUPT 32774747032022883 /* 7-byte number in little endian containing "corrupt" */
 
-extern "C" u32 fsst_import(fsst_decoder_t *decoder, const u8 *buf) {
+extern "C" u32 fsst_import(fsst_decoder_t *decoder, const u8 *buf, size_t *table_size) {
    u64 version = 0;
    u32 code, pos = 17;
    u8 lenHisto[8];
@@ -581,6 +581,11 @@ extern "C" u32 fsst_import(fsst_decoder_t *decoder, const u8 *buf) {
       }
    }
    if (decoder->zeroTerminated) lenHisto[0]++; 
+
+   // set size
+   if(table_size) {
+      *table_size = code;
+   }
 
    // fill unused symbols with text "corrupt". Gives a chance to detect corrupted code sequences (if there are unused symbols).
    while(code<255) {
